@@ -1,0 +1,16 @@
+services:
+  minio:
+    image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
+    container_name: energie-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # API S3 (utilisée par les scripts)
+      - "9001:9001"   # Console web
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:
