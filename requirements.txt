@@ -1,2 +1,3 @@
 dlt[duckdb]
 requests
+prefect>=3
