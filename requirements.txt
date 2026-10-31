@@ -1,3 +1,4 @@
 dlt[duckdb]
 requests
 prefect>=3
+python-dotenv
