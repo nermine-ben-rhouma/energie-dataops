@@ -98,6 +98,3 @@ requirements.txt     dépendances Python
 - Environ 0,01 % des mesures régionales manquent sur la période : un test de complétude est prévu côté dbt.
 - L'image de MinIO n'est plus publiée officiellement depuis septembre 2026 : le projet utilise le fork Silo (voir les décisions d'architecture).
 
-## Équipe
-
-À compléter.
