@@ -1,4 +1,3 @@
-
 services:
   minio:
     image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
@@ -12,6 +11,39 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     volumes:
       - minio_data:/data
+
+  prefect-server:
+    build: .
+    image: energie-ingestion
+    container_name: energie-prefect-server
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "4200:4200"
+    volumes:
+      - prefect_data:/root/.prefect
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:4200/api/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  ingestion:
+    build: .
+    image: energie-ingestion
+    container_name: energie-ingestion
+    working_dir: /data
+    environment:
+      PREFECT_API_URL: http://prefect-server:4200/api
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+    volumes:
+      - ./data:/data
+      - ./monitoring:/app/monitoring
+    depends_on:
+      prefect-server:
+        condition: service_healthy
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana:12.0.2
@@ -31,3 +63,4 @@ services:
 volumes:
   minio_data:
   grafana_data:
+  prefect_data:

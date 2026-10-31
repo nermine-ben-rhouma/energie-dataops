@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ingestion ./ingestion
 COPY orchestration ./orchestration
 
-CMD ["python", "orchestration/serve.py"]
+CMD ["python", "/app/orchestration/serve.py"]
