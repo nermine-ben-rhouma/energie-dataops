@@ -1,0 +1,9 @@
+apiVersion: 1
+datasources:
+  - name: Journal
+    type: frser-sqlite-datasource
+    uid: journal
+    access: proxy
+    isDefault: true
+    jsonData:
+      path: /data/monitoring/monitoring.sqlite
