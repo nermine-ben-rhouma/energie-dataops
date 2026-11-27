@@ -1,0 +1,4 @@
+services:
+  ingestion:
+    extra_hosts:
+      - "odre.opendatasoft.com:127.0.0.1"
