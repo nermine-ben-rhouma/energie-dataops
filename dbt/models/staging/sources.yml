@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: raw
+    database: raw_db
+    schema: raw
+    config:
+      loaded_at_field: "cast(date_heure at time zone 'UTC' as timestamp)"
+      freshness:
+        warn_after: {count: 36, period: hour}
+        error_after: {count: 46, period: hour}
+    tables:
+      - name: eco2mix_national
+        description: Mesures nationales eCO2mix, toutes les 15 minutes.
+      - name: eco2mix_regional
+        description: Historique régional consolidé, toutes les 30 minutes.
+        config:
+          freshness: null   # historique arrêté au 31/08/2026
+      - name: meteo_horaire
+        description: Météo horaire (UTC) de Paris, Lyon et Marseille.
+        config:
+          loaded_at_field: "cast(heure at time zone 'UTC' as timestamp)"

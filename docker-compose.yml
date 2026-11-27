@@ -60,6 +60,14 @@ services:
       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
       - ./monitoring:/data/monitoring:ro
 
+  dbt:
+    build: ./dbt
+    image: energie-dbt
+    profiles: ["dbt"]
+    volumes:
+      - ./dbt:/dbt
+      - ./data:/data
+
 volumes:
   minio_data:
   grafana_data:

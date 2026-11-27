@@ -1,0 +1,21 @@
+energie:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /data/dev.duckdb
+      settings:
+        TimeZone: UTC
+      attach:
+        - path: "{{ env_var('DBT_RAW_PATH', '/data/energie.duckdb') }}"
+          alias: raw_db
+          read_only: true
+    prod:
+      type: duckdb
+      path: /data/prod.duckdb
+      settings:
+        TimeZone: UTC
+      attach:
+        - path: "{{ env_var('DBT_RAW_PATH', '/data/energie.duckdb') }}"
+          alias: raw_db
+          read_only: true
